@@ -12,6 +12,11 @@ public class Ingredients {
 
     }
 
+    public Ingredients(String ingredient, int quantity) {
+        this.ingredient = ingredient;
+        this.quantity = quantity;
+    }
+
     public String getIngredient() {
         return ingredient;
     }
