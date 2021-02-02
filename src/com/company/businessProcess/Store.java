@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Store
 {
-    private static final String COMMA_DELIMITER = ",";
+    
     private StoreManager storeManager = StoreManager.getInstance();
     List<Thread> listOfTerminals;
     boolean closeStore = false;
