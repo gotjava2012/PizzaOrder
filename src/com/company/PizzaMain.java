@@ -1,8 +1,8 @@
 package com.company;
 
+import com.company.businessProcess.IngredientsService;
 import com.company.businessProcess.Store;
 import com.company.domain.Ingredients;
-import org.json.simple.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,12 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.stream.Collectors;
+import static com.company.businessProcess.IngredientsService.*;
+
 
 public class PizzaMain {
 
@@ -36,44 +32,14 @@ public class PizzaMain {
         }
         List<Ingredients> list = initIngredients(ingredients);
 
-        initializeRemoteDatabasewithSupplies(list);
+        IngredientsService.initializeRemoteDatabasewithSupplies(list);
 
-
-        //TODO send ingredients list to web service
-    // when pizzas get made they will validate the ingredients against the web service
-
-    Store store = new Store();
+        Store store = new Store();
 		store.startStore(1);
 
 //		store.closeStore();
 }
 
-    private static void initializeRemoteDatabasewithSupplies(List<Ingredients> list) {
-        JSONObject jsonObject = new JSONObject(list.stream().collect(Collectors.toMap(Ingredients::getIngredient, item -> item.getQuantity())));
-        System.out.println(jsonObject.toString());
-        // Step2: Now pass JSON File Data to REST Service
-        try {
-            URL url = new URL("http://localhost:8080/pizza/ingredients");
-            URLConnection connection = url.openConnection();
-            connection.setDoOutput(true);
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
-            OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
-            out.write(jsonObject.toString());
-            out.close();
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-            while (in.readLine() != null) {
-            }
-            System.out.println("\nREST Service Invoked Successfully..");
-            in.close();
-        } catch (Exception e) {
-            System.out.println("\nError while calling REST Service");
-            System.out.println(e);
-        }
-    }
 
     private static List<Ingredients> initIngredients(File file) {
 
