@@ -28,6 +28,9 @@ Features:
 - Uses multi-threading
 - Uses state pattern for tracking the state of the order
 
+OutStanding Feature:
+Create service to handle ingredients validation and store
+
 How to run the program:
 - There is a simple command line interface defined by PizzaMain you will need to pass in the csv as an argument to run the application
 - An unit test StoreManagerTest
